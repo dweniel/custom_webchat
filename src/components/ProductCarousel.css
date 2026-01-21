@@ -1,0 +1,319 @@
+/* ====================================
+   Product Carousel - E-commerce Style
+   ==================================== */
+
+.product-carousel {
+  width: 100%;
+  padding: 8px 0;
+  overflow: hidden;
+}
+
+.carousel-container {
+  overflow: hidden;
+  margin: 0 -6px;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 12px;
+  padding: 0 6px;
+}
+
+/* Card do produto */
+.carousel-card {
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+.card-inner {
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card-inner:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+/* Badge de desconto */
+.discount-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: linear-gradient(135deg, #2E7D32 0%, #43A047 100%);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 6px;
+  z-index: 2;
+  box-shadow: 0 2px 4px rgba(46, 125, 50, 0.3);
+}
+
+/* Imagem do produto */
+.product-image-container {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 12px;
+  transition: transform 0.3s ease;
+}
+
+.card-inner:hover .product-image {
+  transform: scale(1.05);
+}
+
+/* Informações do produto */
+.product-info {
+  padding: 12px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.product-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: #333;
+  margin: 0;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 34px;
+}
+
+.product-pricing {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: auto;
+}
+
+.original-price {
+  font-size: 12px;
+  color: #999;
+  text-decoration: line-through;
+}
+
+.current-price {
+  font-size: 15px;
+  font-weight: 700;
+  color: #222;
+}
+
+/* Botão de ação */
+.product-action-btn {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #2E7D32 0%, #43A047 100%);
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(46, 125, 50, 0.3);
+}
+
+.product-action-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(46, 125, 50, 0.4);
+}
+
+.product-action-btn:active {
+  transform: scale(0.95);
+}
+
+/* Navegação do carousel */
+.carousel-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 12px;
+  padding: 0 8px;
+}
+
+.nav-button {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  background: #ffffff;
+  color: #666;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.nav-button:hover:not(:disabled) {
+  background: #f5f5f5;
+  border-color: #ccc;
+  color: #333;
+}
+
+.nav-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Indicadores de página (dots) */
+.carousel-dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  background: #ddd;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.2s ease;
+}
+
+.dot.active {
+  width: 24px;
+  background: linear-gradient(135deg, #2E7D32 0%, #43A047 100%);
+}
+
+.dot:hover:not(.active) {
+  background: #bbb;
+}
+
+/* ====================================
+   Responsividade
+   ==================================== */
+
+@media (max-width: 400px) {
+  .product-name {
+    font-size: 12px;
+    min-height: 31px;
+  }
+  
+  .current-price {
+    font-size: 14px;
+  }
+  
+  .original-price {
+    font-size: 11px;
+  }
+  
+  .product-action-btn {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .discount-badge {
+    font-size: 10px;
+    padding: 3px 6px;
+  }
+  
+  .product-info {
+    padding: 10px;
+  }
+  
+  .nav-button {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* ====================================
+   Dark mode support
+   ==================================== */
+
+@media (prefers-color-scheme: dark) {
+  .card-inner {
+    background: #2a2a2a;
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .product-image-container {
+    background: #333;
+  }
+  
+  .product-name {
+    color: #f0f0f0;
+  }
+  
+  .current-price {
+    color: #fff;
+  }
+  
+  .original-price {
+    color: #888;
+  }
+  
+  .nav-button {
+    background: #333;
+    border-color: #444;
+    color: #ccc;
+  }
+  
+  .nav-button:hover:not(:disabled) {
+    background: #444;
+    border-color: #555;
+    color: #fff;
+  }
+  
+  .dot {
+    background: #555;
+  }
+}
+
+/* ====================================
+   Animações
+   ==================================== */
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.product-image-container.loading {
+  background: linear-gradient(
+    90deg,
+    #f0f0f0 25%,
+    #e0e0e0 50%,
+    #f0f0f0 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}

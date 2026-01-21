@@ -1,0 +1,228 @@
+/* Reset básico */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a35 50%, #0f0f23 100%);
+  color: #e2e8f0;
+  line-height: 1.5;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+/* Demo page styles */
+.demo-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.demo-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(ellipse at top left, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom right, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.demo-content {
+  position: relative;
+  text-align: center;
+  max-width: 600px;
+}
+
+.demo-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #818cf8;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+}
+
+.demo-title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  background: linear-gradient(135deg, #fff 0%, #818cf8 50%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.demo-description {
+  font-size: 18px;
+  color: #94a3b8;
+  margin-bottom: 40px;
+  line-height: 1.7;
+}
+
+.demo-features {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.demo-feature {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(30, 30, 63, 0.5);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 8px;
+  font-size: 14px;
+  color: #e2e8f0;
+}
+
+.demo-feature-icon {
+  color: #6366f1;
+}
+
+.demo-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+}
+
+.demo-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+}
+
+.demo-hint {
+  margin-top: 24px;
+  font-size: 14px;
+  color: #64748b;
+}
+
+.demo-hint span {
+  color: #6366f1;
+}
+
+/* Config panel */
+.config-panel {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 320px;
+  background: rgba(26, 26, 53, 0.95);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 16px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+}
+
+.config-panel h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.config-panel h3::before {
+  content: '⚙️';
+}
+
+.config-field {
+  margin-bottom: 12px;
+}
+
+.config-field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: #94a3b8;
+  margin-bottom: 6px;
+}
+
+.config-field input {
+  width: 100%;
+  padding: 10px 12px;
+  background: #0f0f23;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 8px;
+  color: #e2e8f0;
+  font-size: 13px;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.config-field input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.config-field input::placeholder {
+  color: #64748b;
+}
+
+.config-note {
+  font-size: 11px;
+  color: #64748b;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(99, 102, 241, 0.1);
+}
+
+@media (max-width: 768px) {
+  .config-panel {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 40px;
+  }
+}
