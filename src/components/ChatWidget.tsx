@@ -74,20 +74,28 @@ function ChatWidgetInner({ config, autoConnect, startOpen }: ChatWidgetProps) {
   const unreadCount = isOpen ? 0 : messages.filter(m => m.sender === 'bot').length;
 
   // CSS Variables baseadas na config
+  // Determinar se está em modo claro baseado na cor de fundo
+  const isLightMode = config.themeMode === 'light' || 
+    (config.backgroundColor && ['#ffffff', '#fff', '#f8fafc', '#f1f5f9'].includes(config.backgroundColor.toLowerCase()));
+
   const cssVars = {
     '--chat-primary': config.primaryColor || '#6366f1',
     '--chat-secondary': config.secondaryColor || '#818cf8',
     '--chat-background': config.backgroundColor || '#0f0f23',
-    '--chat-text': config.textColor || '#e2e8f0',
+    '--chat-text': config.textColor || (isLightMode ? '#1e293b' : '#e2e8f0'),
+    '--chat-text-muted': isLightMode ? '#64748b' : '#94a3b8',
+    '--chat-surface': isLightMode ? '#ffffff' : '#1e1e3f',
+    '--chat-surface-light': isLightMode ? '#f1f5f9' : '#252550',
+    '--chat-border': isLightMode ? 'rgba(99, 102, 241, 0.2)' : 'rgba(99, 102, 241, 0.4)',
     '--chat-user-bubble': config.userMessageColor || '#6366f1',
-    '--chat-bot-bubble': config.botMessageColor || '#1e1e3f',
+    '--chat-bot-bubble': config.botMessageColor || (isLightMode ? '#f1f5f9' : '#1e1e3f'),
     '--chat-header': config.headerColor || config.primaryColor || '#6366f1',
-    '--chat-footer': config.footerColor || config.backgroundColor || '#0f0f23',
+    '--chat-footer': config.footerColor || (isLightMode ? '#f8fafc' : '#1e1e3f'),
     '--chat-text-header': config.textHeaderColor || '#ffffff',
-    '--chat-text-input': config.textInputColor || '#e2e8f0',
+    '--chat-text-input': config.textInputColor || (isLightMode ? '#1e293b' : '#e2e8f0'),
     '--chat-text-placeholder': config.textPlaceholderColor || '#94a3b8',
     '--chat-text-user-message': config.textUserMessageColor || '#ffffff',
-    '--chat-text-bot-message': config.textBotMessageColor || '#e2e8f0',
+    '--chat-text-bot-message': config.textBotMessageColor || (isLightMode ? '#1e293b' : '#e2e8f0'),
   } as React.CSSProperties;
 
   return (
