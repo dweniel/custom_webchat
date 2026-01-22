@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ChatWidget } from './components';
 import type { WebChatConfig } from './types';
-import { MessageCircle, Zap, Palette, Shield, Code, Type, Link2, Image, Sun, Moon } from 'lucide-react';
+import { MessageCircle, Zap, Palette, Shield, Code, Type, Link2, Image, Sun, Moon, Download } from 'lucide-react';
 
 type ConfigTab = 'connection' | 'appearance' | 'texts';
 type ThemeMode = 'dark' | 'light';
@@ -97,6 +97,146 @@ function App() {
     // Aplica o primeiro preset do novo modo automaticamente
     const firstPreset = colorPresets[newMode][0];
     applyPreset(firstPreset);
+  };
+
+  // Gera o HTML de exemplo para download
+  const generateExampleHTML = () => {
+    const html = `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebChat - ${config.title || 'Chat'}</title>
+  
+  <!-- CSS do WebChat Widget -->
+  <link rel="stylesheet" href="webchat-widget.css">
+  
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      background: ${themeMode === 'light' ? '#f5f5f5' : '#1a1a2e'};
+      color: ${themeMode === 'light' ? '#333' : '#e2e8f0'};
+    }
+    .page-content {
+      padding: 40px 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1 { margin-bottom: 16px; }
+    p { line-height: 1.6; opacity: 0.8; margin-bottom: 12px; }
+    .info-box {
+      margin-top: 30px;
+      padding: 20px;
+      background: ${themeMode === 'light' ? '#e8f5e9' : '#1e3a2f'};
+      border-radius: 12px;
+      border-left: 4px solid #10b981;
+    }
+    .info-box h3 { color: #10b981; margin-bottom: 10px; }
+    .info-box code {
+      display: block;
+      background: ${themeMode === 'light' ? '#fff' : '#0f1f1a'};
+      padding: 12px;
+      border-radius: 6px;
+      font-family: 'Fira Code', monospace;
+      font-size: 13px;
+      margin-top: 10px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <!-- Conteúdo da sua página -->
+  <div class="page-content">
+    <h1>🎉 WebChat Integrado!</h1>
+    <p>O widget do chat aparecerá no canto inferior direito da página.</p>
+    <p>Clique no botão flutuante para abrir o chat e testar a conexão.</p>
+    
+    <div class="info-box">
+      <h3>📁 Arquivos necessários</h3>
+      <p>Para funcionar, você precisa destes arquivos na mesma pasta:</p>
+      <code>
+├── index.html (este arquivo)<br>
+├── webchat-widget.css<br>
+└── webchat-widget.iife.js
+      </code>
+    </div>
+  </div>
+
+  <!-- Configuração do WebChat -->
+  <script>
+    window.WEBCHAT_CONFIG = {
+      // Conexão
+      channelUuid: '${config.channelUuid}',
+      socketUrl: '${config.socketUrl}',
+      host: '${config.host}',
+      
+      // Textos
+      title: '${config.title || 'Chat'}',
+      subtitle: '${config.subtitle || ''}',
+      inputPlaceholder: '${config.inputPlaceholder || 'Digite sua mensagem...'}',
+      ${config.avatarUrl ? `avatarUrl: '${config.avatarUrl}',` : ''}
+      
+      // Cores - Componentes
+      primaryColor: '${config.primaryColor}',
+      secondaryColor: '${config.secondaryColor}',
+      backgroundColor: '${config.backgroundColor}',
+      userMessageColor: '${config.userMessageColor}',
+      botMessageColor: '${config.botMessageColor}',
+      headerColor: '${config.headerColor}',
+      footerColor: '${config.footerColor}',
+      
+      // Cores - Textos
+      textHeaderColor: '${config.textHeaderColor}',
+      textUserMessageColor: '${config.textUserMessageColor}',
+      textBotMessageColor: '${config.textBotMessageColor}',
+      textInputColor: '${config.textInputColor}',
+      textPlaceholderColor: '${config.textPlaceholderColor}',
+    };
+  </script>
+
+  <!-- Script do WebChat Widget -->
+  <script src="webchat-widget.iife.js"></script>
+</body>
+</html>`;
+
+    // Cria o arquivo e faz o download
+    const blob = new Blob([html], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'index.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  // Função para baixar todos os arquivos do widget como ZIP
+  const downloadWidgetFiles = async () => {
+    // Abre uma janela de instruções
+    const instructions = `
+📦 INSTRUÇÕES DE DOWNLOAD
+
+Para integrar o WebChat no seu site, você precisa de 3 arquivos:
+
+1. index.html (já baixado ao clicar em "Baixar HTML de exemplo")
+2. webchat-widget.css
+3. webchat-widget.iife.js
+
+Os arquivos do widget estão na pasta:
+dist/widget/
+
+Copie os arquivos para o seu servidor e coloque todos na mesma pasta.
+
+Estrutura final:
+├── index.html
+├── webchat-widget.css
+└── webchat-widget.iife.js
+    `.trim();
+    
+    alert(instructions);
   };
 
   return (
@@ -505,6 +645,40 @@ function App() {
               </div>
             </>
           )}
+        </div>
+
+        {/* Botão de Download */}
+        <div className="download-section">
+          <button 
+            className="download-button"
+            onClick={generateExampleHTML}
+          >
+            <Download size={18} />
+            <span>1. Baixar HTML</span>
+          </button>
+          
+          <div className="download-files">
+            <a 
+              href="/widget/webchat-widget.css" 
+              download="webchat-widget.css"
+              className="download-file-link"
+            >
+              <Download size={14} />
+              2. webchat-widget.css
+            </a>
+            <a 
+              href="/widget/webchat-widget.iife.js" 
+              download="webchat-widget.iife.js"
+              className="download-file-link"
+            >
+              <Download size={14} />
+              3. webchat-widget.iife.js
+            </a>
+          </div>
+          
+          <p className="download-hint">
+            Baixe os 3 arquivos e coloque na mesma pasta do seu site
+          </p>
         </div>
       </div>
 

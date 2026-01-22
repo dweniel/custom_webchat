@@ -472,6 +472,77 @@ input, button, textarea, select {
   border: 2px solid rgba(99, 102, 241, 0.3);
 }
 
+/* Download Section */
+.download-section {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(99, 102, 241, 0.2);
+  text-align: center;
+}
+
+.download-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 20px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.download-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+.download-button:active {
+  transform: translateY(0);
+}
+
+.download-hint {
+  margin-top: 12px;
+  font-size: 11px;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+.download-files {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.download-file-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 8px;
+  color: #818cf8;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.download-file-link:hover {
+  background: rgba(99, 102, 241, 0.2);
+  color: #e2e8f0;
+  transform: translateY(-1px);
+}
+
 @media (max-width: 900px) {
   .config-panel {
     position: relative;
