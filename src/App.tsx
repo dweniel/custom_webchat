@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { ChatWidget } from './components';
 import type { WebChatConfig } from './types';
-import { MessageCircle, Zap, Palette, Shield, Code, Type, Link2, Image } from 'lucide-react';
+import { MessageCircle, Zap, Palette, Shield, Code, Type, Link2, Image, Sun, Moon } from 'lucide-react';
 
 type ConfigTab = 'connection' | 'appearance' | 'texts';
+type ThemeMode = 'dark' | 'light';
 
 function App() {
   const [activeTab, setActiveTab] = useState<ConfigTab>('appearance');
+  const [themeMode, setThemeMode] = useState<ThemeMode>('dark');
   
   // Configuração do chat
   const [config, setConfig] = useState<WebChatConfig>({
@@ -49,16 +51,29 @@ function App() {
     setConfig(prev => ({ ...prev, [key]: value }));
   };
 
-  const colorPresets = [
-    { name: 'Indigo', primary: '#6366f1', secondary: '#818cf8', bg: '#0f0f23', botBubble: '#1e1e3f', header: '#6366f1', footer: '#1e1e3f' },
-    { name: 'Emerald', primary: '#10b981', secondary: '#34d399', bg: '#0f1f1a', botBubble: '#1a2f2a', header: '#10b981', footer: '#1a2f2a' },
-    { name: 'Rose', primary: '#f43f5e', secondary: '#fb7185', bg: '#1f0f14', botBubble: '#2f1a22', header: '#f43f5e', footer: '#2f1a22' },
-    { name: 'Amber', primary: '#f59e0b', secondary: '#fbbf24', bg: '#1f1a0f', botBubble: '#2f2a1a', header: '#f59e0b', footer: '#2f2a1a' },
-    { name: 'Cyan', primary: '#06b6d4', secondary: '#22d3ee', bg: '#0f1a1f', botBubble: '#1a2a2f', header: '#06b6d4', footer: '#1a2a2f' },
-    { name: 'Purple', primary: '#a855f7', secondary: '#c084fc', bg: '#1a0f23', botBubble: '#2a1e3f', header: '#a855f7', footer: '#2a1e3f' },
-  ];
+  // Presets de cores com versões dark e light
+  const colorPresets = {
+    dark: [
+      { name: 'Indigo', primary: '#6366f1', secondary: '#818cf8', bg: '#0f0f23', botBubble: '#1e1e3f', header: '#6366f1', footer: '#1e1e3f', textHeader: '#ffffff', textUser: '#ffffff', textBot: '#e2e8f0', textInput: '#e2e8f0', textPlaceholder: '#94a3b8' },
+      { name: 'Emerald', primary: '#10b981', secondary: '#34d399', bg: '#0f1f1a', botBubble: '#1a2f2a', header: '#10b981', footer: '#1a2f2a', textHeader: '#ffffff', textUser: '#ffffff', textBot: '#e2e8f0', textInput: '#e2e8f0', textPlaceholder: '#94a3b8' },
+      { name: 'Rose', primary: '#f43f5e', secondary: '#fb7185', bg: '#1f0f14', botBubble: '#2f1a22', header: '#f43f5e', footer: '#2f1a22', textHeader: '#ffffff', textUser: '#ffffff', textBot: '#e2e8f0', textInput: '#e2e8f0', textPlaceholder: '#94a3b8' },
+      { name: 'Amber', primary: '#f59e0b', secondary: '#fbbf24', bg: '#1f1a0f', botBubble: '#2f2a1a', header: '#f59e0b', footer: '#2f2a1a', textHeader: '#ffffff', textUser: '#ffffff', textBot: '#e2e8f0', textInput: '#e2e8f0', textPlaceholder: '#94a3b8' },
+      { name: 'Cyan', primary: '#06b6d4', secondary: '#22d3ee', bg: '#0f1a1f', botBubble: '#1a2a2f', header: '#06b6d4', footer: '#1a2a2f', textHeader: '#ffffff', textUser: '#ffffff', textBot: '#e2e8f0', textInput: '#e2e8f0', textPlaceholder: '#94a3b8' },
+      { name: 'Purple', primary: '#a855f7', secondary: '#c084fc', bg: '#1a0f23', botBubble: '#2a1e3f', header: '#a855f7', footer: '#2a1e3f', textHeader: '#ffffff', textUser: '#ffffff', textBot: '#e2e8f0', textInput: '#e2e8f0', textPlaceholder: '#94a3b8' },
+    ],
+    light: [
+      { name: 'Indigo', primary: '#6366f1', secondary: '#818cf8', bg: '#ffffff', botBubble: '#f1f5f9', header: '#6366f1', footer: '#f8fafc', textHeader: '#ffffff', textUser: '#ffffff', textBot: '#1e293b', textInput: '#1e293b', textPlaceholder: '#94a3b8' },
+      { name: 'Emerald', primary: '#10b981', secondary: '#34d399', bg: '#ffffff', botBubble: '#ecfdf5', header: '#10b981', footer: '#f8fafc', textHeader: '#ffffff', textUser: '#ffffff', textBot: '#1e293b', textInput: '#1e293b', textPlaceholder: '#94a3b8' },
+      { name: 'Rose', primary: '#f43f5e', secondary: '#fb7185', bg: '#ffffff', botBubble: '#fff1f2', header: '#f43f5e', footer: '#f8fafc', textHeader: '#ffffff', textUser: '#ffffff', textBot: '#1e293b', textInput: '#1e293b', textPlaceholder: '#94a3b8' },
+      { name: 'Amber', primary: '#f59e0b', secondary: '#fbbf24', bg: '#ffffff', botBubble: '#fffbeb', header: '#f59e0b', footer: '#f8fafc', textHeader: '#1e293b', textUser: '#1e293b', textBot: '#1e293b', textInput: '#1e293b', textPlaceholder: '#94a3b8' },
+      { name: 'Cyan', primary: '#06b6d4', secondary: '#22d3ee', bg: '#ffffff', botBubble: '#ecfeff', header: '#06b6d4', footer: '#f8fafc', textHeader: '#ffffff', textUser: '#ffffff', textBot: '#1e293b', textInput: '#1e293b', textPlaceholder: '#94a3b8' },
+      { name: 'Purple', primary: '#a855f7', secondary: '#c084fc', bg: '#ffffff', botBubble: '#faf5ff', header: '#a855f7', footer: '#f8fafc', textHeader: '#ffffff', textUser: '#ffffff', textBot: '#1e293b', textInput: '#1e293b', textPlaceholder: '#94a3b8' },
+    ],
+  };
 
-  const applyPreset = (preset: typeof colorPresets[0]) => {
+  const currentPresets = colorPresets[themeMode];
+
+  const applyPreset = (preset: typeof currentPresets[0]) => {
     setConfig(prev => ({
       ...prev,
       primaryColor: preset.primary,
@@ -68,7 +83,20 @@ function App() {
       botMessageColor: preset.botBubble,
       headerColor: preset.header,
       footerColor: preset.footer,
+      textHeaderColor: preset.textHeader,
+      textUserMessageColor: preset.textUser,
+      textBotMessageColor: preset.textBot,
+      textInputColor: preset.textInput,
+      textPlaceholderColor: preset.textPlaceholder,
     }));
+  };
+
+  const toggleThemeMode = () => {
+    const newMode = themeMode === 'dark' ? 'light' : 'dark';
+    setThemeMode(newMode);
+    // Aplica o primeiro preset do novo modo automaticamente
+    const firstPreset = colorPresets[newMode][0];
+    applyPreset(firstPreset);
   };
 
   return (
@@ -146,11 +174,30 @@ function App() {
           {/* Aba Aparência */}
           {activeTab === 'appearance' && (
             <>
+              {/* Switch Modo Claro/Escuro */}
+              <div className="config-section">
+                <div className="theme-mode-toggle">
+                  <span className={`theme-mode-label ${themeMode === 'light' ? 'active' : ''}`}>
+                    <Sun size={16} /> Dia
+                  </span>
+                  <button 
+                    className={`theme-mode-switch ${themeMode}`}
+                    onClick={toggleThemeMode}
+                    aria-label="Alternar modo claro/escuro"
+                  >
+                    <span className="theme-mode-switch-thumb" />
+                  </button>
+                  <span className={`theme-mode-label ${themeMode === 'dark' ? 'active' : ''}`}>
+                    <Moon size={16} /> Noite
+                  </span>
+                </div>
+              </div>
+
               {/* Presets de cores */}
               <div className="config-section">
                 <label className="config-section-label">Temas prontos</label>
                 <div className="color-presets">
-                  {colorPresets.map((preset) => (
+                  {currentPresets.map((preset) => (
                     <button
                       key={preset.name}
                       className="color-preset"
@@ -159,7 +206,7 @@ function App() {
                     >
                       <span 
                         className="color-preset-swatch"
-                        style={{ background: `linear-gradient(135deg, ${preset.primary} 0%, ${preset.secondary} 100%)` }}
+                        style={{ background: preset.primary }}
                       />
                       <span className="color-preset-name">{preset.name}</span>
                     </button>
