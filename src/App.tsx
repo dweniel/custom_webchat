@@ -176,48 +176,182 @@ function App() {
     }
     .page-content {
       padding: 40px 20px;
-      max-width: 800px;
+      max-width: 900px;
       margin: 0 auto;
     }
     h1 { margin-bottom: 16px; }
+    h2 { margin-top: 30px; margin-bottom: 16px; font-size: 1.4em; }
     p { line-height: 1.6; opacity: 0.8; margin-bottom: 12px; }
     .info-box {
-      margin-top: 30px;
+      margin-top: 20px;
       padding: 20px;
       background: ${themeMode === 'light' ? '#e8f5e9' : '#1e3a2f'};
       border-radius: 12px;
       border-left: 4px solid #10b981;
     }
     .info-box h3 { color: #10b981; margin-bottom: 10px; }
-    .info-box code {
+    .info-box p { margin-bottom: 8px; }
+    .code-box {
+      margin-top: 20px;
+      padding: 20px;
+      background: ${themeMode === 'light' ? '#fff3e0' : '#2d2a1f'};
+      border-radius: 12px;
+      border-left: 4px solid #f59e0b;
+    }
+    .code-box h3 { color: #f59e0b; margin-bottom: 10px; }
+    .code-container {
+      position: relative;
+      margin-top: 12px;
+    }
+    .code-block {
       display: block;
-      background: ${themeMode === 'light' ? '#fff' : '#0f1f1a'};
-      padding: 12px;
-      border-radius: 6px;
-      font-family: 'Fira Code', monospace;
-      font-size: 13px;
-      margin-top: 10px;
+      background: ${themeMode === 'light' ? '#1e1e2e' : '#0d0d1a'};
+      color: #e2e8f0;
+      padding: 16px;
+      border-radius: 8px;
+      font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
+      font-size: 12px;
+      line-height: 1.5;
       overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 8px 16px;
+      background: #10b981;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .copy-btn:hover { background: #059669; }
+    .copy-btn.copied { background: #6366f1; }
+    .steps-list {
+      margin: 16px 0;
+      padding-left: 0;
+      list-style: none;
+    }
+    .steps-list li {
+      padding: 12px 16px;
+      margin-bottom: 8px;
+      background: ${themeMode === 'light' ? '#f0f0f0' : '#252540'};
+      border-radius: 8px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .step-number {
+      background: #6366f1;
+      color: white;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+    .divider {
+      height: 1px;
+      background: ${themeMode === 'light' ? '#ddd' : '#333'};
+      margin: 30px 0;
     }
   </style>
 </head>
 <body>
   <!-- Conteúdo da sua página -->
   <div class="page-content">
-    <h1>🎉 WebChat Integrado!</h1>
-    <p>O widget do chat aparecerá no canto inferior direito da página.</p>
-    <p>Clique no botão flutuante para abrir o chat e testar a conexão.</p>
+    <h1>🎉 WebChat Configurado com Sucesso!</h1>
+    <p>O widget do chat está aparecendo no canto inferior direito desta página. Clique nele para testar!</p>
     
     <div class="info-box">
-      <h3>📁 Arquivos necessários</h3>
-      <p>Para funcionar, você precisa destes arquivos na mesma pasta:</p>
-      <code>
-├── index.html (este arquivo)<br>
-├── webchat-widget.css<br>
-└── webchat-widget.iife.js
-      </code>
+      <h3>📁 Arquivos do Widget</h3>
+      <p>Esta pasta contém 3 arquivos necessários para o funcionamento:</p>
+      <ul class="steps-list">
+        <li><span class="step-number">1</span> <strong>index.html</strong> - Esta página de teste</li>
+        <li><span class="step-number">2</span> <strong>webchat-widget.css</strong> - Estilos do chat</li>
+        <li><span class="step-number">3</span> <strong>webchat-widget.iife.js</strong> - Script do chat</li>
+      </ul>
+    </div>
+
+    <div class="divider"></div>
+
+    <h2>🚀 Como integrar no seu site</h2>
+    <p>Siga os passos abaixo para adicionar o chat ao seu site:</p>
+    
+    <ul class="steps-list">
+      <li><span class="step-number">1</span> Faça upload dos arquivos <strong>webchat-widget.css</strong> e <strong>webchat-widget.iife.js</strong> para o servidor do seu site</li>
+      <li><span class="step-number">2</span> Copie o código abaixo clicando no botão "Copiar código"</li>
+      <li><span class="step-number">3</span> Cole o código antes do fechamento da tag <strong>&lt;/body&gt;</strong> no HTML do seu site</li>
+      <li><span class="step-number">4</span> Ajuste os caminhos dos arquivos CSS e JS se necessário</li>
+    </ul>
+
+    <div class="code-box">
+      <h3>📋 Código para copiar</h3>
+      <p>Cole este código no HTML do seu site:</p>
+      <div class="code-container">
+        <button class="copy-btn" onclick="copyCode()">📋 Copiar código</button>
+        <pre class="code-block" id="code-to-copy">&lt;!-- WebChat Widget - CSS --&gt;
+&lt;link rel="stylesheet" href="webchat-widget.css"&gt;
+
+&lt;!-- WebChat Widget - Configuração --&gt;
+&lt;script&gt;
+window.WEBCHAT_CONFIG = {
+  channelUuid: '${config.channelUuid}',
+  socketUrl: '${config.socketUrl}',
+  host: '${config.host}',
+  title: '${config.title || 'Chat'}',
+  subtitle: '${config.subtitle || ''}',
+  inputPlaceholder: '${config.inputPlaceholder || 'Digite sua mensagem...'}',
+  welcomeMessage: '${config.welcomeMessage || 'Olá! Como posso ajudar você hoje?'}',${config.avatarUrl ? `
+  avatarUrl: '${config.avatarUrl}',` : ''}
+  primaryColor: '${config.primaryColor}',
+  secondaryColor: '${config.secondaryColor}',
+  backgroundColor: '${config.backgroundColor}',
+  userMessageColor: '${config.userMessageColor}',
+  botMessageColor: '${config.botMessageColor}',
+  headerColor: '${config.headerColor}',
+  footerColor: '${config.footerColor}',
+  textHeaderColor: '${config.textHeaderColor}',
+  textUserMessageColor: '${config.textUserMessageColor}',
+  textBotMessageColor: '${config.textBotMessageColor}',
+  textInputColor: '${config.textInputColor}',
+  textPlaceholderColor: '${config.textPlaceholderColor}'
+};
+&lt;/script&gt;
+
+&lt;!-- WebChat Widget - Script --&gt;
+&lt;script src="webchat-widget.iife.js"&gt;&lt;/script&gt;</pre>
+      </div>
     </div>
   </div>
+
+  <script>
+    function copyCode() {
+      const codeElement = document.getElementById('code-to-copy');
+      const code = codeElement.innerText
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>');
+      
+      navigator.clipboard.writeText(code).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        btn.textContent = '✅ Copiado!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = '📋 Copiar código';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+  </script>
 
   <!-- Configuração do WebChat -->
   <script>
