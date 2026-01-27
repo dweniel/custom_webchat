@@ -30,7 +30,13 @@ export function ChatWidget({ config, autoConnect = true, startOpen = false }: Ch
 function ChatWidgetInner({ config, autoConnect, startOpen }: ChatWidgetProps) {
   const [isOpen, setIsOpen] = useState(startOpen);
   const [isMinimized, setIsMinimized] = useState(false);
-  const { connect, disconnect, isConnected, messages } = useChatContext();
+  const { connect, disconnect, isConnected, messages, connectionStatus, error } = useChatContext();
+  
+  // Verificar se há Channel UUID configurado
+  const hasChannelUuid = Boolean(config.channelUuid && config.channelUuid.trim());
+  
+  // Verificar se há erro de conexão (UUID inválido, servidor não encontrado, etc)
+  const hasConnectionError = connectionStatus === 'error' || error !== null;
 
   // Auto-conectar quando configurado
   useEffect(() => {
@@ -43,7 +49,8 @@ function ChatWidgetInner({ config, autoConnect, startOpen }: ChatWidgetProps) {
   // Conectar ao abrir o chat (mesmo sem autoConnect)
   const handleOpen = () => {
     setIsOpen(true);
-    if (!isConnected) {
+    // Só conecta se tiver channelUuid configurado
+    if (!isConnected && hasChannelUuid) {
       console.log('[ChatWidget] Chat aberto, conectando...');
       setTimeout(() => connect(), 100);
     }
@@ -119,11 +126,39 @@ function ChatWidgetInner({ config, autoConnect, startOpen }: ChatWidgetProps) {
             />
             
             <div className="chat-body">
-              <ChatMessages welcomeMessage={config.welcomeMessage} />
-              <TypingIndicator avatarUrl={config.avatarUrl} />
+              {/* Mensagem quando não há Channel UUID */}
+              {!hasChannelUuid ? (
+                <div className="chat-config-warning">
+                  <div className="chat-config-warning-icon">⚠️</div>
+                  <div className="chat-config-warning-title">Channel UUID não configurado</div>
+                  <div className="chat-config-warning-text">
+                    Por favor, insira o Channel UUID na aba "Conexão" para iniciar o chat.
+                  </div>
+                </div>
+              ) : hasConnectionError ? (
+                /* Mensagem de erro de conexão */
+                <div className="chat-config-warning chat-config-error">
+                  <div className="chat-config-warning-icon">❌</div>
+                  <div className="chat-config-warning-title">Erro de conexão</div>
+                  <div className="chat-config-warning-text">
+                    {error?.message || 'Não foi possível conectar. Verifique se o Channel UUID está correto.'}
+                  </div>
+                  <button 
+                    className="chat-retry-btn"
+                    onClick={() => connect()}
+                  >
+                    🔄 Tentar novamente
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <ChatMessages welcomeMessage={config.welcomeMessage} />
+                  <TypingIndicator avatarUrl={config.avatarUrl} />
+                </>
+              )}
             </div>
             
-            <ChatInput placeholder={config.inputPlaceholder} />
+            <ChatInput placeholder={config.inputPlaceholder} disabled={!hasChannelUuid || hasConnectionError} />
           </motion.div>
         )}
       </AnimatePresence>

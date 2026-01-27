@@ -5,9 +5,10 @@ import { useChatContext } from '../context/ChatContext';
 
 interface ChatInputProps {
   placeholder?: string;
+  disabled?: boolean;
 }
 
-export function ChatInput({ placeholder = 'Digite sua mensagem...' }: ChatInputProps) {
+export function ChatInput({ placeholder = 'Digite sua mensagem...', disabled = false }: ChatInputProps) {
   const [message, setMessage] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -62,9 +63,10 @@ export function ChatInput({ placeholder = 'Digite sua mensagem...' }: ChatInputP
             onKeyDown={handleKeyDown}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
-            placeholder={placeholder}
+            placeholder={disabled ? 'Configure o Channel UUID...' : placeholder}
             className="chat-input-field"
             rows={1}
+            disabled={disabled}
           />
         </div>
 

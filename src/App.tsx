@@ -13,7 +13,7 @@ function App() {
   // Configuração do chat
   const [config, setConfig] = useState<WebChatConfig>({
     // Configurações de conexão
-    channelUuid: '81310c47-8520-40bf-a8a2-281bd495b7ba',
+    channelUuid: '',
     socketUrl: 'https://websocket.weni.ai',
     host: 'https://flows.weni.ai',
 
@@ -956,8 +956,9 @@ Estrutura final:
         </p>
       </div>
 
-      {/* Widget do Chat */}
+      {/* Widget do Chat - key força refresh quando channelUuid muda */}
       <ChatWidget 
+        key={config.channelUuid || 'no-channel'}
         config={config}
         autoConnect={false}
         startOpen={false}
