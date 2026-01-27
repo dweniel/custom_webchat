@@ -452,24 +452,100 @@ input, button, textarea, select {
   border-color: #6366f1;
 }
 
+/* Avatar Upload Area */
+.avatar-upload-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  background: rgba(15, 15, 35, 0.5);
+  border: 2px dashed rgba(99, 102, 241, 0.3);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.avatar-upload-area:hover {
+  border-color: #6366f1;
+  background: rgba(99, 102, 241, 0.1);
+}
+
+.avatar-upload-input {
+  display: none;
+}
+
+.avatar-upload-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #94a3b8;
+}
+
+.avatar-upload-content svg {
+  color: #6366f1;
+}
+
+.avatar-upload-content span {
+  font-size: 13px;
+}
+
+.avatar-upload-hint {
+  font-size: 11px !important;
+  color: #64748b !important;
+}
+
 /* Avatar preview */
 .avatar-preview {
-  margin-top: 10px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px;
+  gap: 16px;
+  padding: 12px;
   background: rgba(15, 15, 35, 0.5);
-  border-radius: 8px;
-  border: 1px solid rgba(99, 102, 241, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(99, 102, 241, 0.2);
 }
 
 .avatar-preview img {
-  width: 48px;
-  height: 48px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid rgba(99, 102, 241, 0.3);
+  flex-shrink: 0;
+}
+
+.avatar-preview-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.avatar-preview-info span {
+  font-size: 13px;
+  color: #e2e8f0;
+}
+
+.avatar-remove-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 6px;
+  color: #ef4444;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: fit-content;
+}
+
+.avatar-remove-btn:hover {
+  background: rgba(239, 68, 68, 0.25);
+  border-color: #ef4444;
 }
 
 /* Download Section */

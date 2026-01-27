@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ChatWidget } from './components';
 import type { WebChatConfig } from './types';
-import { MessageCircle, Zap, Palette, Shield, Code, Type, Link2, Image, Sun, Moon, Download } from 'lucide-react';
+import { MessageCircle, Zap, Palette, Shield, Code, Type, Link2, Image, Sun, Moon, Download, Upload, X } from 'lucide-react';
 
 type ConfigTab = 'connection' | 'appearance' | 'texts';
 type ThemeMode = 'dark' | 'light';
@@ -49,6 +49,96 @@ function App() {
 
   const updateConfig = (key: keyof WebChatConfig, value: string) => {
     setConfig(prev => ({ ...prev, [key]: value }));
+  };
+
+  const handleAvatarUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    console.log('[Avatar] Arquivo selecionado:', file);
+    
+    if (file) {
+      // Validar se é uma imagem
+      if (!file.type.startsWith('image/')) {
+        alert('Por favor, selecione um arquivo de imagem válido.');
+        return;
+      }
+      
+      console.log('[Avatar] Iniciando leitura do arquivo...');
+      
+      // Comprimir e redimensionar a imagem
+      const reader = new FileReader();
+      
+      reader.onerror = (error) => {
+        console.error('[Avatar] Erro ao ler arquivo:', error);
+      };
+      
+      reader.onload = () => {
+        console.log('[Avatar] Arquivo lido, criando imagem...');
+        const img = new window.Image();
+        
+        img.onerror = (error) => {
+          console.error('[Avatar] Erro ao carregar imagem:', error);
+        };
+        
+        img.onload = () => {
+          console.log('[Avatar] Imagem carregada:', img.width, 'x', img.height);
+          
+          // Configurações de compressão
+          const MAX_SIZE = 150; // Tamanho máximo em pixels
+          const QUALITY = 0.8; // Qualidade da compressão (0 a 1)
+          
+          // Calcular novas dimensões mantendo proporção
+          let width = img.width;
+          let height = img.height;
+          
+          if (width > height) {
+            if (width > MAX_SIZE) {
+              height = Math.round((height * MAX_SIZE) / width);
+              width = MAX_SIZE;
+            }
+          } else {
+            if (height > MAX_SIZE) {
+              width = Math.round((width * MAX_SIZE) / height);
+              height = MAX_SIZE;
+            }
+          }
+          
+          console.log('[Avatar] Redimensionando para:', width, 'x', height);
+          
+          // Criar canvas para redimensionar
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          
+          const ctx = canvas.getContext('2d');
+          if (ctx) {
+            // Aplicar suavização para melhor qualidade
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+            ctx.drawImage(img, 0, 0, width, height);
+            
+            // Converter para base64 comprimido
+            const compressedDataUrl = canvas.toDataURL('image/jpeg', QUALITY);
+            
+            // Verificar tamanho final
+            const sizeInKB = Math.round((compressedDataUrl.length * 3) / 4 / 1024);
+            console.log(`[Avatar] Imagem comprimida: ${width}x${height}px, ~${sizeInKB}KB`);
+            
+            updateConfig('avatarUrl', compressedDataUrl);
+            console.log('[Avatar] Config atualizada!');
+          } else {
+            console.error('[Avatar] Não foi possível obter contexto 2D do canvas');
+          }
+        };
+        
+        img.src = reader.result as string;
+      };
+      
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const removeAvatar = () => {
+    updateConfig('avatarUrl', '');
   };
 
   // Presets de cores com versões dark e light
@@ -582,15 +672,34 @@ Estrutura final:
                   Logo / Avatar
                 </label>
                 <div className="config-field">
-                  <input
-                    type="text"
-                    value={config.avatarUrl || ''}
-                    onChange={(e) => updateConfig('avatarUrl', e.target.value)}
-                    placeholder="https://exemplo.com/logo.png"
-                  />
-                  {config.avatarUrl && (
+                  {!config.avatarUrl ? (
+                    <label className="avatar-upload-area">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleAvatarUpload}
+                        className="avatar-upload-input"
+                      />
+                      <div className="avatar-upload-content">
+                        <Upload size={24} />
+                        <span>Clique para selecionar uma imagem</span>
+                        <span className="avatar-upload-hint">PNG, JPG ou GIF</span>
+                      </div>
+                    </label>
+                  ) : (
                     <div className="avatar-preview">
-                      <img src={config.avatarUrl} alt="Preview" />
+                      <img src={config.avatarUrl} alt="Preview do avatar" />
+                      <div className="avatar-preview-info">
+                        <span>Imagem selecionada</span>
+                        <button 
+                          className="avatar-remove-btn"
+                          onClick={removeAvatar}
+                          type="button"
+                        >
+                          <X size={14} />
+                          Remover
+                        </button>
+                      </div>
                     </div>
                   )}
                 </div>

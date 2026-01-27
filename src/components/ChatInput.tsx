@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Send, Paperclip, Mic, Smile } from 'lucide-react';
+import { Send } from 'lucide-react';
 import { useChatContext } from '../context/ChatContext';
 
 interface ChatInputProps {
@@ -53,19 +53,6 @@ export function ChatInput({ placeholder = 'Digite sua mensagem...' }: ChatInputP
   return (
     <div className={`chat-input-container ${isFocused ? 'chat-input-container--focused' : ''}`}>
       <form onSubmit={handleSubmit} className="chat-input-form">
-        {/* Botões de ação à esquerda */}
-        <div className="chat-input-actions">
-          <motion.button
-            type="button"
-            className="chat-input-btn"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            aria-label="Anexar arquivo"
-          >
-            <Paperclip size={20} />
-          </motion.button>
-        </div>
-
         {/* Campo de texto */}
         <div className="chat-input-wrapper">
           <textarea
@@ -81,31 +68,18 @@ export function ChatInput({ placeholder = 'Digite sua mensagem...' }: ChatInputP
           />
         </div>
 
-        {/* Botões de ação à direita */}
+        {/* Botão de enviar */}
         <div className="chat-input-actions">
-          {message.trim() ? (
-            <motion.button
-              type="submit"
-              className="chat-input-btn chat-input-btn--send"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              aria-label="Enviar mensagem"
-            >
-              <Send size={20} />
-            </motion.button>
-          ) : (
-            <motion.button
-              type="button"
-              className="chat-input-btn"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              aria-label="Gravar áudio"
-            >
-              <Mic size={20} />
-            </motion.button>
-          )}
+          <motion.button
+            type="submit"
+            className={`chat-input-btn ${message.trim() ? 'chat-input-btn--send' : ''}`}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            aria-label="Enviar mensagem"
+            disabled={!message.trim()}
+          >
+            <Send size={20} />
+          </motion.button>
         </div>
       </form>
 

@@ -180,8 +180,17 @@ function ChatWidgetInner({ config, autoConnect, startOpen }: ChatWidgetProps) {
               animate={{ rotate: 0, opacity: 1 }}
               exit={{ rotate: -90, opacity: 0 }}
               transition={{ duration: 0.2 }}
+              className="chat-launcher-icon"
             >
-              <MessageCircle size={24} />
+              {config.avatarUrl ? (
+                <img 
+                  src={config.avatarUrl} 
+                  alt="Avatar" 
+                  className="chat-launcher-avatar"
+                />
+              ) : (
+                <MessageCircle size={24} />
+              )}
             </motion.div>
           )}
         </AnimatePresence>
