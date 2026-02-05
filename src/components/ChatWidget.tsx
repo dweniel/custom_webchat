@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Minus } from 'lucide-react';
+import { MessageCircle, X } from 'lucide-react';
 import { ChatProvider, useChatContext } from '../context/ChatContext';
 import { ChatHeader } from './ChatHeader';
 import { ChatMessages } from './ChatMessages';
@@ -30,7 +30,7 @@ export function ChatWidget({ config, autoConnect = true, startOpen = false }: Ch
 function ChatWidgetInner({ config, autoConnect, startOpen }: ChatWidgetProps) {
   const [isOpen, setIsOpen] = useState(startOpen);
   const [isMinimized, setIsMinimized] = useState(false);
-  const { connect, disconnect, isConnected, messages, connectionStatus, error } = useChatContext();
+  const { connect, isConnected, messages, connectionStatus, error } = useChatContext();
   
   // Verificar se há Channel UUID configurado
   const hasChannelUuid = Boolean(config.channelUuid && config.channelUuid.trim());

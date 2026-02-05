@@ -8,15 +8,17 @@ import type {
 } from '../types';
 import { isCarouselMessage, parseCarouselXml, extractTextFromCarouselMessage } from '../utils/carouselParser';
 
+interface WeniMessageData {
+  type?: string;
+  text?: string;
+  media?: string;
+  messageId?: string;
+  quick_replies?: Array<{ title: string; payload: string }>;
+}
+
 interface WeniServerMessage {
   type: string;
-  message?: {
-    type?: string;
-    text?: string;
-    media?: string;
-    messageId?: string;
-    quick_replies?: Array<{ title: string; payload: string }>;
-  };
+  message?: WeniMessageData;
   text?: string;
   error?: string;
   warning?: string;
@@ -359,7 +361,7 @@ export function useWeniSocket(config: WebChatConfig) {
 
     // Processar mensagem do bot
     if (data.type === 'message' || data.message) {
-      const messageData = data.message || data;
+      const messageData: WeniMessageData = data.message || {};
       
       // Extrair texto
       let text = '';

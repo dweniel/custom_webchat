@@ -448,32 +448,6 @@ window.WEBCHAT_CONFIG = {
     }
   };
 
-  // Função para baixar todos os arquivos do widget como ZIP
-  const downloadWidgetFiles = async () => {
-    // Abre uma janela de instruções
-    const instructions = `
-📦 INSTRUÇÕES DE DOWNLOAD
-
-Para integrar o WebChat no seu site, você precisa de 3 arquivos:
-
-1. index.html (já baixado ao clicar em "Baixar HTML de exemplo")
-2. webchat-widget.css
-3. webchat-widget.iife.js
-
-Os arquivos do widget estão na pasta:
-dist/widget/
-
-Copie os arquivos para o seu servidor e coloque todos na mesma pasta.
-
-Estrutura final:
-├── index.html
-├── webchat-widget.css
-└── webchat-widget.iife.js
-    `.trim();
-    
-    alert(instructions);
-  };
-
   return (
     <div className="demo-page">
       {/* Painel de configuração */}

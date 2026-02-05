@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, ShoppingBag, ExternalLink } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { ChevronLeft, ChevronRight, ShoppingBag } from 'lucide-react';
 import type { CarouselProduct } from '../types';
 import './ProductCarousel.css';
 

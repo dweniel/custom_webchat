@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { useChatContext } from '../context/ChatContext';
 import type { QuickReply } from '../types';

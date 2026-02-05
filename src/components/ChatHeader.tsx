@@ -1,6 +1,5 @@
-import React from 'react';
 import { motion } from 'framer-motion';
-import { Minus, X, Wifi, WifiOff } from 'lucide-react';
+import { Minus, X } from 'lucide-react';
 import { useChatContext } from '../context/ChatContext';
 
 interface ChatHeaderProps {
